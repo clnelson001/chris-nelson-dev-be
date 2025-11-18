@@ -11,12 +11,7 @@ variable "site_bucket_name" {
 }
 
 variable "root_domain" {
-  description = "Root domain name (e.g. example.com)"
-  type        = string
-}
-
-variable "site_domain" {
-  description = "Hostname for the site (can be same as root_domain, e.g. example.com)"
+  description = "Root domain name (e.g., chris-nelson.dev)"
   type        = string
 }
 

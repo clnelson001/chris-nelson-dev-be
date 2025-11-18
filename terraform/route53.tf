@@ -1,7 +1,7 @@
 # A record for your site domain pointing at CloudFront
 resource "aws_route53_record" "site_a" {
   zone_id = aws_route53_zone.main.zone_id
-  name    = var.site_domain
+  name    = var.root_domain
   type    = "A"
 
   alias {

@@ -7,18 +7,23 @@ resource "aws_route53_zone" "main" {
   }
 }
 
-# ACM certificate for the site domain, issued in us-east-1 for CloudFront
+# ACM certificate for the site, issued in us-east-1 for CloudFront
 resource "aws_acm_certificate" "site" {
   provider          = aws.us_east_1
-  domain_name       = var.site_domain
+  domain_name       = var.root_domain          # chris-nelson.dev
   validation_method = "DNS"
+
+  # Also cover www.chris-nelson.dev
+  subject_alternative_names = [
+    "www.${var.root_domain}"
+  ]
 
   lifecycle {
     create_before_destroy = true
   }
 
   tags = {
-    Name = "Certificate for ${var.site_domain}"
+    Name = "Certificate for ${var.root_domain}"
   }
 }
 
@@ -39,6 +44,7 @@ resource "aws_route53_record" "site_cert_validation" {
   records = [each.value.record]
 }
 
+# Complete ACM certificate validation
 resource "aws_acm_certificate_validation" "site" {
   provider                = aws.us_east_1
   certificate_arn         = aws_acm_certificate.site.arn
