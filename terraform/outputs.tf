@@ -20,12 +20,12 @@ output "route53_zone_id" {
 
 output "github_aws_access_key_id" {
   description = "Access key ID for GitHub Actions IAM user"
-  value       = aws_iam_access_key.github.id
+  value       = aws_iam_access_key.github_actions.id
   sensitive   = true
 }
 
 output "github_aws_secret_access_key" {
   description = "Secret access key for GitHub Actions IAM user"
-  value       = aws_iam_access_key.github.secret
+  value       = aws_iam_access_key.github_actions.id
   sensitive   = true
 }
