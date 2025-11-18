@@ -20,3 +20,14 @@ variable "github_iam_username" {
   type        = string
   default     = "github-actions-site-deploy"
 }
+
+variable "allowed_ip" {
+  description = "Public IP address allowed to access CloudFront"
+  type        = string
+}
+
+variable "enable_ip_lock" {
+  description = "Enable CloudFront IP restriction function"
+  type        = bool
+  default     = true
+}

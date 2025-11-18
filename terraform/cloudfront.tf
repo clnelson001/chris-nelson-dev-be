@@ -6,18 +6,46 @@ resource "aws_cloudfront_origin_access_control" "site" {
   signing_protocol                  = "sigv4"
 }
 
+resource "aws_cloudfront_function" "ip_restrict" {
+  name    = "cf-ip-restrict"
+  runtime = "cloudfront-js-1.0"
+
+  code = <<EOF
+function handler(event) {
+  var request = event.request;
+  var ip = event.viewer.ip;
+
+  var allowedIp = "${var.allowed_ip}";
+
+  if (ip === allowedIp) {
+    return request;
+  }
+
+  return {
+    statusCode: 403,
+    statusDescription: "Forbidden",
+    headers: {
+      "content-type": { value: "text/plain" }
+    },
+    body: "Access denied"
+  };
+}
+EOF
+}
+
 resource "aws_cloudfront_distribution" "site" {
-  depends_on = [aws_acm_certificate_validation.site]
+  depends_on = [
+    aws_acm_certificate_validation.site
+  ]
 
   enabled             = true
   comment             = "CloudFront distribution for ${var.root_domain}"
   default_root_object = "index.html"
   price_class         = "PriceClass_100"
 
-  # Both apex and www use this distribution
   aliases = [
-    var.root_domain,             # chris-nelson.dev
-    "www.${var.root_domain}",    # www.chris-nelson.dev
+    var.root_domain,
+    "www.${var.root_domain}"
   ]
 
   origin {
@@ -35,6 +63,15 @@ resource "aws_cloudfront_distribution" "site" {
     cached_methods  = ["GET", "HEAD"]
 
     compress = true
+
+    dynamic "function_association" {
+      for_each = var.enable_ip_lock ? [1] : []
+
+      content {
+        event_type   = "viewer-request"
+        function_arn = aws_cloudfront_function.ip_restrict.arn
+      }
+    }
 
     forwarded_values {
       query_string = false
