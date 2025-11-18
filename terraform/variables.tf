@@ -31,3 +31,8 @@ variable "enable_ip_lock" {
   type        = bool
   default     = true
 }
+
+variable "site_alarm_email" {
+  description = "Email address for uptime and error alerts"
+  type        = string
+}
