@@ -1,0 +1,19 @@
+Here are the only 2 things must be manually fixed after a full terraform destroy:
+
+1. Update GoDaddy → NEW Route53 nameservers
+
+Terraform will provide a different set every time a new hosted zone is created.
+
+That is the biggest manual step.
+
+2. Update GitHub  (chris-nelson-dev) → NEW IAM user credentials + New Distribution
+
+Because destroying the IAM access key means loss of the associated secrets.
+
+New apply = new key = update GitHub secrets:
+
+AWS_ACCESS_KEY_ID
+
+AWS_SECRET_ACCESS_KEY
+
+AWS_DISTRIBUTION_ID
