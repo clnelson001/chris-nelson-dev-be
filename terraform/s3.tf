@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "site" {
   bucket = var.site_bucket_name
+  force_destroy = true
 
   tags = {
     Name = "Portfolio Static Site Bucket"
