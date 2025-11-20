@@ -40,10 +40,10 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = "chris-terraform-state"
-    key            = "chris-nelson-dev/terraform.tfstate"
+    bucket         = "chris-nelson-terraform-state"
+    key            = "chris-nelson-dev-be/terraform.tfstate"
     region         = "us-east-1"
     profile        = "personal"
-    dynamodb_table = "terraform-locks"
+    #dynamodb_table = "terraform-locks" # maybe later
   }
 }
