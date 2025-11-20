@@ -1,7 +1,7 @@
 # IAM user for GitHub Actions deployments
 resource "aws_iam_user" "github_actions" {
   name = var.github_iam_username
-
+  force_destroy = true
   tags = {
     Name = "GitHub Actions deploy user for ${var.root_domain}"
   }
