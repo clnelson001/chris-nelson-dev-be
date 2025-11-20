@@ -1,3 +1,5 @@
+#############################################
+# Versions
 terraform {
   required_version = ">= 1.5.0"
 
@@ -14,13 +16,34 @@ terraform {
   }
 }
 
+#############################################
+# Default AWS provider for all primary resources.
+# Uses the region defined in variables and the "personal" profile.
+
 provider "aws" {
   region  = var.aws_region
   profile = "personal"
 }
 
+#############################################
+# Secondary AWS provider for resources that MUST be created in us-east-1.
+# Required for CloudFront ACM certificates and any global services bound to this region.
+
 provider "aws" {
   alias   = "us_east_1"
   region  = "us-east-1"
   profile = "personal"
+}
+
+#############################################
+#for remotely maintaining state
+
+terraform {
+  backend "s3" {
+    bucket         = "chris-terraform-state"
+    key            = "chris-nelson-dev/terraform.tfstate"
+    region         = "us-east-1"
+    profile        = "personal"
+    dynamodb_table = "terraform-locks"
+  }
 }
