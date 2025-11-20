@@ -10,3 +10,6 @@ terraform/*.tfvars.json
 terraform/override.tf
 terraform/override.tf.json
 lambda/*.zip
+dns/.terraform.lock.hcl
+dns/terraform.tfvars
+dns/.terraform/

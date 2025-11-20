@@ -15,7 +15,7 @@ output "cloudfront_domain_name" {
 
 output "route53_zone_id" {
   description = "Hosted zone ID for the root domain"
-  value       = aws_route53_zone.main.zone_id
+  value       = data.aws_route53_zone.main.zone_id
 }
 
 output "github_aws_access_key_id" {

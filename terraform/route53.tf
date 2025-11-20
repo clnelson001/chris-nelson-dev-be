@@ -1,6 +1,6 @@
-# A record for your site domain pointing at CloudFront
+# A record for the root site domain pointing at CloudFront
 resource "aws_route53_record" "site_a" {
-  zone_id = aws_route53_zone.main.zone_id
+  zone_id = data.aws_route53_zone.main.zone_id
   name    = var.root_domain
   type    = "A"
 
@@ -11,9 +11,9 @@ resource "aws_route53_record" "site_a" {
   }
 }
 
-# Optional www record pointing at the same CloudFront distribution
+# A record for the www subdomain pointing at the same CloudFront distribution
 resource "aws_route53_record" "www_site_a" {
-  zone_id = aws_route53_zone.main.zone_id
+  zone_id = data.aws_route53_zone.main.zone_id
   name    = "www.${var.root_domain}"
   type    = "A"
 

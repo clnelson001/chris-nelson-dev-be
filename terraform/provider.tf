@@ -8,7 +8,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
-
+    github = {
+      source  = "integrations/github"
+      version = "~> 6.0"
+    }
     archive = {
       source  = "hashicorp/archive"
       version = "~> 2.5"
@@ -47,3 +50,6 @@ terraform {
     #dynamodb_table = "terraform-locks" # maybe later
   }
 }
+
+#############################################
+
