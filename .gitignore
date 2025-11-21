@@ -13,3 +13,4 @@ lambda/*.zip
 dns/.terraform.lock.hcl
 dns/terraform.tfvars
 dns/.terraform/
+*.zip
